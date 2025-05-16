@@ -131,6 +131,14 @@ xtabs(~ probability_of_hd + sex, data=predicted.data)
 logistic <- glm(hd ~ ., data=data, family="binomial")
 summary(logistic)
 
+
+##calculate which predictors were most important
+var_imp <- varImp(logistic)
+var_imp %>%
+  arrange(desc(Overall)) %>%
+  tibble::rownames_to_column("Predictor")
+var_imp
+
 ##calculate the overall "Pseudo R-squared" and its p-value
 ll.null <- logistic$null.deviance/-2
 ll.proposed <- logistic$deviance/-2
