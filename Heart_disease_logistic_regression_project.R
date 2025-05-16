@@ -2,7 +2,7 @@ library(tidyverse)
 library(ggplot2)
 
 
-url <- "https://raw.githubusercontent.com/samyvivo/Heart_disease/refs/heads/main/Heart%20disease(raw%20data).txt"
+url <- "https://raw.githubusercontent.com/samyvivo/Heart_disease/refs/heads/main/Heart_disease_raw_data.txt"
 
 cols = c("age",
          "sex",# 0 = female, 1 = male
