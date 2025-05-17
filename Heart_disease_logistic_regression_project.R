@@ -36,18 +36,17 @@ cols = c("age",
 )
 
 
-
+##Reading dataset from the source
 data <- read.csv(url, header = F , col.names = cols)
 
-head(data)
+##Viewing data and structures
 glimpse(data)
 View(data)
 
-
+##Cleaning the question mark from dataset
 data[data == "?"]  <- NA
 
 ##turn data to factor and recode some values
-
 data <- data %>% 
   mutate(sex=recode_factor(sex, "1"="M", "0"="F"))
 
@@ -64,7 +63,6 @@ data <- data %>%
 
 ## quality control by making sure all of the factor...
 ## levels of hd are represented by people with and without heart disease (hd)
-
 xtabs(~ hd + sex, data=data)
 xtabs(~ hd + cp, data=data)
 xtabs(~ hd + fbs, data=data)
@@ -75,11 +73,12 @@ xtabs(~ hd + ca, data=data)
 xtabs(~ hd + thal, data=data)
 
 ## logistic regression model for sex for see the corelation
-
 logistic_sex_model <- glm(hd~sex, data=data, family = "binomial")
 
+##statistical summary of model
 summary(logistic_sex_model)
 
+##calculate the odd and odd ratio for mans and womans
 female_log_odd <- log(25/72)
 female_log_odd
 
@@ -149,13 +148,13 @@ ll.proposed <- logistic$deviance/-2
 1 - pchisq(2*(ll.proposed - ll.null), df=(length(logistic$coefficients)-1))
 
 
-#clean NA values
+##clean NA values
 data_clean <- na.omit(data)
 
+##model predicting
 predicted_data <- data.frame(
   probability_of_hd=logistic$fitted.values,
   hd=data_clean$hd)
-
 
 predicted_data <- predicted_data[
   order(predicted_data$probability_of_hd, decreasing=FALSE),]
@@ -164,9 +163,8 @@ predicted_data$rank <- 1:nrow(predicted_data)
 
 #plot the predicted probabilities for each sample having
 #heart disease and color by whether or not they actually had heart disease
-
 ggplot(data=predicted_data, aes(x=rank, y=probability_of_hd)) +
-  geom_point(aes(color=hd), alpha=1, shape=4, stroke=2) +
+  geom_point(aes(color=hd), alpha=1, shape=10, stroke=3) +
   xlab("Indexes") +
   ylab("Predicted probability of getting heart disease")
 
