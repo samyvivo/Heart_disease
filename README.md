@@ -1,4 +1,4 @@
-# Heart_disease(Regression_model)
+# Heart_disease_Regression_model
 
 
 URL : https://archive.ics.uci.edu/dataset/45/heart+disease
